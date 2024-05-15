@@ -46,7 +46,7 @@ def college_prediction(input_data,X,y,top_n=10):
 def main():
     st.title("Engineering College and Branch Prediction")
     # Load data
-    data = pd.read_csv("College_data.csv")
+    data = pd.read_csv("Eamcet_data.csv")
     data['Caste'] = label_encoder.fit_transform(data['Caste'])
     data['Gender'] = label_encoder.fit_transform(data['Gender'])
     data['College_Branch'] = label_encoder.fit_transform(data['College_Branch'])

@@ -4,6 +4,17 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
 import pandas as pd
+
+# Load data
+data = pd.read_csv("Eamcet_data.csv")
+data['Caste'] = label_encoder.fit_transform(data['Caste'])
+data['Gender'] = label_encoder.fit_transform(data['Gender'])
+data['College_Branch'] = label_encoder.fit_transform(data['College_Branch'])
+    
+# Feature selection
+X = data[['Rank', 'Caste', 'Gender']]
+y = data['College_Branch']
+
 # Train model
 dt = DecisionTreeClassifier()
 dt.fit(X, y)
@@ -46,15 +57,7 @@ def college_prediction(input_data, X, y, top_n=10):
 
 def main():
     st.title("Engineering College and Branch Prediction")
-    # Load data
-    data = pd.read_csv("Eamcet_data.csv")
-    data['Caste'] = label_encoder.fit_transform(data['Caste'])
-    data['Gender'] = label_encoder.fit_transform(data['Gender'])
-    data['College_Branch'] = label_encoder.fit_transform(data['College_Branch'])
     
-    # Feature selection
-    X = data[['Rank', 'Caste', 'Gender']]
-    y = data['College_Branch']
     
 
     Rank = st.text_input("EAMCET Rank:")

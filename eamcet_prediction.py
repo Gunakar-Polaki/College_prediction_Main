@@ -6,19 +6,6 @@ from sklearn.model_selection import train_test_split
 import pandas as pd
 
 label_encoder = LabelEncoder()
-# Load data
-data = pd.read_csv("Eamcet_data.csv")
-data['Caste'] = label_encoder.fit_transform(data['Caste'])
-data['Gender'] = label_encoder.fit_transform(data['Gender'])
-data['College_Branch'] = label_encoder.fit_transform(data['College_Branch'])
-    
-# Feature selection
-X = data[['Rank', 'Caste', 'Gender']]
-y = data['College_Branch']
-
-# Train model
-dt = DecisionTreeClassifier()
-dt.fit(X, y)
 
 
 def map_gender(gender):
@@ -38,7 +25,11 @@ def college_prediction(input_data, X, y, top_n=10):
         input_data_modified = np.asarray(input_data, dtype=float)
         input_data_reshaped = input_data_modified.reshape(1, -1)
 
+        # Train model
+        dt = DecisionTreeClassifier()
+        dt.fit(X, y)
         
+
         
         # Predict the probabilities of each class
         probabilities = dt.predict_proba(input_data_reshaped)[0]
@@ -59,7 +50,16 @@ def college_prediction(input_data, X, y, top_n=10):
 def main():
     st.title("Engineering College and Branch Prediction")
     
-    
+    # Load data
+    data = pd.read_csv("Eamcet_data.csv")
+    data['Caste'] = label_encoder.fit_transform(data['Caste'])
+    data['Gender'] = label_encoder.fit_transform(data['Gender'])
+    data['College_Branch'] = label_encoder.fit_transform(data['College_Branch'])
+        
+    # Feature selection
+    X = data[['Rank', 'Caste', 'Gender']]
+    y = data['College_Branch']
+
 
     Rank = st.text_input("EAMCET Rank:")
     Caste = st.selectbox("Caste", ['None','BC_A', 'BC_B', 'BC_C', 'BC_D', 'BC_E', 'OC', 'SC', 'ST'])

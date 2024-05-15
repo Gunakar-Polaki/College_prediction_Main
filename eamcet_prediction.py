@@ -1,7 +1,7 @@
 import numpy as np
 import streamlit as st
 from sklearn.preprocessing import LabelEncoder
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
 import pandas as pd
 
@@ -25,11 +25,11 @@ def college_prediction(input_data,X,y,top_n=10):
         input_data_reshaped = input_data_modified.reshape(1, -1)
 
         # Train  model
-        random_forest = RandomForestClassifier(n_estimators=100, random_state=42, n_jobs=-1)
-        random_forest.fit(X, y)
+        dt = DecisionTreeClassifier()
+        dt.fit(X, y)
         
         # Predict the probabilities of each class
-        probabilities = random_forest.predict_proba(input_data_reshaped)
+        probabilities = dt.predict_proba(input_data_reshaped)
         
         # Get the indices of the top predicted classes
         top_indices = np.argsort(probabilities[0])[::-1][:top_n]

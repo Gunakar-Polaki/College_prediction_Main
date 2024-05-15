@@ -73,7 +73,7 @@ def main():
             predictions = college_prediction(input_data, X, y, top_n)
             st.write(f"Top {top_n} Predictions:")
             for i, (predicted_class, probability) in enumerate(predictions):
-                st.write(f"{i + 1}. {predicted_class}, Probability: {probability:.4f}")
+                st.write(f"{i + 1}. {predicted_class}")
 
 if __name__ == '__main__':
     main()

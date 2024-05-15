@@ -5,6 +5,7 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
 import pandas as pd
 
+label_encoder = LabelEncoder()
 # Load data
 data = pd.read_csv("Eamcet_data.csv")
 data['Caste'] = label_encoder.fit_transform(data['Caste'])
@@ -18,7 +19,7 @@ y = data['College_Branch']
 # Train model
 dt = DecisionTreeClassifier()
 dt.fit(X, y)
-label_encoder = LabelEncoder()
+
 
 def map_gender(gender):
     return 1 if gender == 'M' else 0

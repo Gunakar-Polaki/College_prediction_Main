@@ -44,6 +44,8 @@ def college_prediction(input_data, X, y, top_n=10):
         
     except Exception as e:
         st.error(f"An error occurred: {e}")
+        return []  # Return an empty list in case of error
+
 
 def main():
     st.title("Engineering College and Branch Prediction")
@@ -72,11 +74,15 @@ def main():
         else:
             input_data = [Rank, Caste, Gender]
             predictions = college_prediction(input_data, X, y, top_n)
-            st.write(f"Top {top_n} Predictions:")
-            for i, (predicted_class, probability) in enumerate(predictions):
-                st.write(f"{i + 1}. {predicted_class}, Probability: {probability:.4f}")
-                # Printing actual trained data corresponding to predicted class
-                st.write(data[data['College_Branch'] == predicted_class])
+            if predictions:
+                st.write(f"Top {top_n} Predictions:")
+                for i, (predicted_class, probability) in enumerate(predictions):
+                    st.write(f"{i + 1}. {predicted_class}, Probability: {probability:.4f}")
+                    # Printing actual trained data corresponding to predicted class
+                    st.write(data[data['College_Branch'] == predicted_class])
+            else:
+                st.error("No predictions were made due to an error.")
+
 
 if __name__ == '__main__':
     main()

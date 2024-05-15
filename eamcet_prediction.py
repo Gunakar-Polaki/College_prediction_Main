@@ -14,7 +14,7 @@ def map_caste(caste):
     caste_mapping = {'BC_A': 0, 'BC_B': 1, 'BC_C': 2, 'BC_D': 3, 'BC_E': 4, 'OC': 5, 'SC': 6, 'ST': 7}
     return caste_mapping.get(caste, -1)  
 
-def college_prediction(input_data, X, y, top_n=10):
+def college_prediction(input_data,dt, X, y, top_n=10):
     try:
         # Map gender and caste selections to numerical values
         input_data[2] = map_gender(input_data[2])
@@ -24,9 +24,7 @@ def college_prediction(input_data, X, y, top_n=10):
         input_data_modified = np.asarray(input_data, dtype=float)
         input_data_reshaped = input_data_modified.reshape(1, -1)
 
-        # Train model
-        dt = DecisionTreeClassifier()
-        dt.fit(X, y)
+        
         
         # Predict the probabilities of each class
         probabilities = dt.predict_proba(input_data_reshaped)[0]
@@ -64,13 +62,16 @@ def main():
     # Checkbox for selecting the number of top predictions to display
     top_n_values = [1, 5, 10, 20, 50, 100]
     top_n = st.selectbox("Select Top N Predictions:", top_n_values, index=2)
+    # Train model
+    dt = DecisionTreeClassifier()
+    dt.fit(X, y)
     
     if st.button("Predict"):
         if not Rank or not Caste or not Gender:
             st.error("Please provide all input values.")
         else:
             input_data = [Rank, Caste, Gender]
-            predictions = college_prediction(input_data, X, y, top_n)
+            predictions = college_prediction(input_data,dt, X, y, top_n)
             st.write(f"Top {top_n} Predictions:")
             for i, (predicted_class, probability) in enumerate(predictions):
                 st.write(f"{i + 1}. {predicted_class}")

@@ -37,15 +37,12 @@ def college_prediction(input_data, X, y, top_n=10):
         top_predictions = []
         for idx in top_indices:
             predicted_class = label_encoder.inverse_transform([idx])[0]
-            actual_predicted_class = label_encoder.classes_[predicted_class]
-            top_predictions.append((actual_predicted_class, probabilities[idx]))
+            top_predictions.append((predicted_class, probabilities[idx]))
         
         return top_predictions
         
     except Exception as e:
         st.error(f"An error occurred: {e}")
-        return []  # Return an empty list in case of error
-
 
 def main():
     st.title("Engineering College and Branch Prediction")
@@ -74,15 +71,9 @@ def main():
         else:
             input_data = [Rank, Caste, Gender]
             predictions = college_prediction(input_data, X, y, top_n)
-            if predictions:
-                st.write(f"Top {top_n} Predictions:")
-                for i, (predicted_class, probability) in enumerate(predictions):
-                    st.write(f"{i + 1}. {predicted_class}, Probability: {probability:.4f}")
-                    # Printing actual trained data corresponding to predicted class
-                    st.write(data[data['College_Branch'] == predicted_class])
-            else:
-                st.error("No predictions were made due to an error.")
-
+            st.write(f"Top {top_n} Predictions:")
+            for i, (predicted_class, probability) in enumerate(predictions):
+                st.write(f"{i + 1}. {predicted_class}")
 
 if __name__ == '__main__':
     main()

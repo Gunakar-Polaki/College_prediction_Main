@@ -5,8 +5,7 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
 import pandas as pd
 
-# Load data
-data = pd.read_excel("College_data.xlsx")
+
 
 label_encoder = LabelEncoder()
 def college_prediction(input_data):
@@ -17,7 +16,8 @@ def college_prediction(input_data):
     input_data = [float(x) for x in input_data]
     input_data_modified = np.asarray(input_data)
     input_data_reshaped = input_data_modified.reshape(1, -1)
-    
+    # Load data
+    data = pd.read_excel("College_data.xlsx")
     data['Caste'] = label_encoder.fit_transform(data['Caste'])
     data['Gender'] = label_encoder.fit_transform(data['Gender'])
     data['College_Branch'] = label_encoder.fit_transform(data['College_Branch'])

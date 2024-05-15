@@ -37,7 +37,8 @@ def college_prediction(input_data, X, y, top_n=10):
         top_predictions = []
         for idx in top_indices:
             predicted_class = label_encoder.inverse_transform([idx])[0]
-            top_predictions.append((predicted_class, probabilities[idx]))
+            actual_predicted_class = label_encoder.classes_[predicted_class]
+            top_predictions.append((actual_predicted_class, probabilities[idx]))
         
         return top_predictions
         

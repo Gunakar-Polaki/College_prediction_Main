@@ -25,7 +25,7 @@ def college_prediction(input_data, top_n=10):
         input_data_reshaped = input_data_modified.reshape(1, -1)
         
         # Predict the probabilities of each class
-        probabilities = loaded_model.predict_proba(input_data_reshaped)
+        probabilities = dt.predict_proba(input_data_reshaped)
         
         # Get the indices of the top predicted classes
         top_indices = np.argsort(probabilities[0])[::-1][:top_n]
@@ -33,7 +33,7 @@ def college_prediction(input_data, top_n=10):
         # Display the top predictions
         st.write(f"Top {top_n} Predictions:")
         for i, idx in enumerate(top_indices):
-            st.write(f"{i + 1}. {loaded_model.classes_[idx]}")
+            st.write(f"{i + 1}. {dt.classes_[idx]}")
     except Exception as e:
         st.error(f"An error occurred: {e}")
 

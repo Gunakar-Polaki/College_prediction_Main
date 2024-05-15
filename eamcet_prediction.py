@@ -34,10 +34,11 @@ def college_prediction(input_data,X,y,top_n=10):
         # Get the indices of the top predicted classes
         top_indices = np.argsort(probabilities[0])[::-1][:top_n]
         
-        # Display the top predictions
         st.write(f"Top {top_n} Predictions:")
         for i, idx in enumerate(top_indices):
-            st.write(f"{i + 1}. {dt.classes_[idx]}")
+            predicted_class = label_encoder.inverse_transform([idx])[0]  
+            st.write(f"{i + 1}. {predicted_class}")
+        
     except Exception as e:
         st.error(f"An error occurred: {e}")
 

@@ -14,7 +14,7 @@ def map_caste(caste):
     
 label_encoder = LabelEncoder()
 
-def college_prediction(input_data, top_n=10):
+def college_prediction(input_data,X,y,top_n=10):
     try:
         # Map gender and caste selections to numerical values
         input_data[2] = map_gender(input_data[2])
@@ -23,6 +23,10 @@ def college_prediction(input_data, top_n=10):
         # Convert input data to numpy array and reshape
         input_data_modified = np.asarray(input_data, dtype=float)
         input_data_reshaped = input_data_modified.reshape(1, -1)
+
+        # Train  model
+        dt = DecisionTreeClassifier() 
+        dt.fit(X, y)
         
         # Predict the probabilities of each class
         probabilities = dt.predict_proba(input_data_reshaped)
@@ -49,9 +53,7 @@ def main():
     # Feature selection
     X = data[['Rank', 'Caste', 'Gender']]
     y = data['College_Branch']
-    # Train  model
-    dt = DecisionTreeClassifier() 
-    dt.fit(X, y)
+    
 
     Rank = st.text_input("EAMCET Rank:")
     Caste = st.selectbox("Caste", ['None','BC_A', 'BC_B', 'BC_C', 'BC_D', 'BC_E', 'OC', 'SC', 'ST'])
@@ -66,7 +68,7 @@ def main():
             st.error("Please provide all input values.")
         else:
             input_data = [Rank, Caste, Gender]
-            college_prediction(input_data, top_n)
+            college_prediction(input_data,X,y, top_n)
 
 if __name__ == '__main__':
     main()

@@ -63,7 +63,7 @@ def main():
 
     Rank = st.text_input("EAMCET Rank:")
     Caste = st.selectbox("Caste", ['None','BC_A', 'BC_B', 'BC_C', 'BC_D', 'BC_E', 'OC', 'SC', 'ST'])
-    Gender = st.selectbox("Gender", ['None','M', 'F'])
+    Gender = st.radio("Gender", ['Male', 'Female'])
     
     # Checkbox for selecting the number of top predictions to display
     top_n_values = [1, 5, 10, 20, 50, 100]
